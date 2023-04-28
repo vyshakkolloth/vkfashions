@@ -27,7 +27,7 @@ app.use(nocache())
 
 
 mongoose.set('strictQuery',true)
-mongoose.connect("mongodb://127.0.0.1:27017/example").then(console.log("connected"))
+mongoose.connect(process.env.mongo).then(console.log("connected"))//mongodb://127.0.0.1:27017/example
 
 // for user route
 const user_Route=require('./routes/userRoutes')
