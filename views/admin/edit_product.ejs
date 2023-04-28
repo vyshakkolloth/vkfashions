@@ -1,0 +1,154 @@
+<%- include('../layouts/admin/header.ejs') %>
+
+<!-- onsubmit="return validateForm()"-->
+            <!-- Typography Start -->
+            <form method="post" onsubmit="return validateForm()" enctype="multipart/form-data" action="/admin/editProduct">
+                <div class="col-sm-12 col-xl-8 m-auto mt-4">
+                    <div class="bg-secondary rounded h-100 p-4">
+                        <h6 class="mb-4"><Embed>Edit product</Embed></h6>
+
+                        <label for="name">Product Name </label>
+                        <input class="form-control mb-3" type="text" required name="name" id="name" value="<%= product.name%>"
+                            aria-label="default input example">
+
+
+                        <!-- <label for="name">Category </label> -->
+                        <!-- <div class="form-floating mb-3">
+                            <select name="category" class="form-select" id="floatingSelect" aria-label="Floating label select example">
+                                
+                            </select>
+                            <label for="floatingSelect">Select Category</label>
+                        </div> -->
+                        
+                        <div class="mb-3">
+                            <div class="owl-carousel testimonial-carousel">
+                                <% for(i=0;i<product.image.length;i++) { %>
+                                   
+                                 
+                                    <div class="testimonial-item text-center">
+                                        <img class="img-fluid rounded-circle mx-auto mb-4" src="/images/<%= product.image[i] %>" style="width: 100px; height: 100px;">
+                                        <% if (product.image.length>1) { %>
+                                            <a href="/admin/deletephoto?delete=<%= product.image[i] %>&product=<%= product._id %>">                                  
+                                                <button type="button" class="btn btn-square btn-secondary" title="Delete photo" ><i class="fa fa-trash hover"></i></button>
+                                            </a>
+                                        <% } %>
+                                        
+                                    </div>
+                                <% } %>
+                                 
+
+                            </div>
+
+                        </div>
+                        <!--  -->
+
+
+
+                        <label for="name">Image </label>
+                        <div class="mb-3">
+                            <input  class="form-control form-control-sm bg-dark" id="fileToUpload" id="fileToUpload" name="image" value="<%= product.image %>" type="file" accept="image/*" multiple />
+                        </div>
+
+                        <label for="name">After discount price </label>
+                        <input required class="form-control mb-3" type="number" min="1" name="pPrice" value="<%= product.pPrice%>" id="price"
+                            aria-label="default input example"/>
+                            <label for="name">Brand </label>
+                        <input required class="form-control mb-3" type="text" name="brand" value="<%= product.brand%>" id="brand"
+                            aria-label="default input example"/>
+                        <label for="name">Quantity </label>
+                        <input required class="form-control mb-3" type="number" min="1" name="quantity" value="<%= product.quantity%>" id="stock"
+                            aria-label="default input example"/>
+                        <label for="name">Before discount price </label>
+                        <input required class="form-control mb-3" type="number" min="1" name="sPrice" value="<%= product.selling%>"id="pprice"
+                            aria-label="default input example"/>
+                            
+
+
+                            <!-- 0 -->
+                            <label for="size">size </label>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" name="size"id="inlineCheckbox1"  value="xs" <% if (product.size.includes('xs')) { %>checked<% } %>>
+                                <label class="form-check-label" for="inlineCheckbox1">XS</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" name="size" id="inlineCheckbox2" value="s"<% if (product.size.includes('s')) { %>checked<% } %>>
+                                <label class="form-check-label" for="inlineCheckbox2">S</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" name="size" id="inlineCheckbox3" value="m" <% if (product.size.includes('m')) { %>checked<% } %>>
+                                <label class="form-check-label" for="inlineCheckbox3">M</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" name="size" id="inlineCheckbox3" value="l" <% if (product.size.includes('l')) { %>checked<% } %>>
+                                <label class="form-check-label" for="inlineCheckbox3">L</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" name="size" id="inlineCheckbox3" value="xl" <% if (product.size.includes('xl')) { %>checked<% } %>>
+                                <label class="form-check-label" for="inlineCheckbox3">XL</label>
+                            </div>
+                            <hr>
+                            <!--  -->
+
+                            
+                        
+
+                        <label for="discription">discription </label>
+
+                            
+
+                        <div class="form-floating mb-3">
+                            <textarea required class="form-control" placeholder="description" id="floatingTextarea"
+                                style="height: 150px;" value="<%= product.description%>" name="discription"><%= product.description%></textarea>
+                            <label for="floatingTextarea">Comments</label>
+                        </div>
+                        <% if (typeof message !=='undefined' ) { %>
+                            <p style="color: green">
+                              <%= message %>
+                            </p>
+                            <% } %>
+                            <input type="hidden" name="id" value="<%=product._id %>">
+                        <button class="btn btn-primary w-100 m-2" type="submit">Submit</button>
+                    </div>
+                </div>
+            </form>
+            <!-- <script type="text/javascript">
+                function validateForm() {
+                  // Get the values entered by the user
+                  var name = document.getElementById("name").value;
+                  var brand = document.getElementById("brand").value;
+                  var description = document.getElementById("floatingTextarea").value;
+                  var price = parseFloat(document.getElementById("price").value);
+                  var quantity = document.getElementById("stock").value;
+                  var sizes = document.querySelectorAll('input[name="size"]:checked');
+                  
+            //   console.log(name+brand+description+price+quantity+sizes+file +"hello")
+                  // Validate the values
+                  if (name == "" || brand == "" || description == "" || price == "" || isNaN(price) || price <= 0 || pprice == "" || isNaN(pprice) || pprice <= 0 ||quantity == "" || sizes.length == 0 ) {
+                    // Display a SweetAlert error message
+                    Swal.fire({
+                      icon: 'error',
+                      title: 'Oops...',
+                      text: 'Please fill in all required fields and select an image and enter price value greater than 0',
+                    });
+                    return false;
+                  }
+              
+                  // Vali+date the file extension
+                  var extension = file.value.split('.').pop().toLowerCase();
+                  if (extension != "jpg" && extension != "jpeg" && extension != "png" && extension != "gif" && extension != "webp") {
+                    // Display a SweetAlert error message
+                    Swal.fire({
+                      icon: 'error',
+                      title: 'Oops...',
+                      text: 'Please select a valid image file (JPG, PNG or GIF)',
+                    });
+                    return false;
+                  }
+              
+                  // If everything is valid, return true to submit the form
+                  return true;
+                }
+              </script> -->
+
+
+            <%- include('../layouts/admin/footer.ejs') %>

@@ -1,0 +1,353 @@
+<%- include('../layouts/user/header.ejs') %>
+    <!--  -->
+
+    <div class="row align-items-center justify-content-between py-3 px-xl-5">
+        <div class="col-lg-3 d-none d-lg-block">
+            <a href="/" class="text-decoration-none">
+                <h1 class="m-0 display-5 font-weight-semi-bold"><span
+                        class="text-primary font-weight-bold border px-3 mr-1">VK</span>FASHION</h1>
+            </a>
+        </div>
+        <!--  -->
+
+        <!--  -->
+        <div class="col-lg-7 col-6 text-right ">
+            <a href="/wishListDisplay" class="btn border">
+                <i class="fas fa-heart text-primary"></i>
+                <span class="badge">0</span>
+            </a>
+            <a href="/cart" class="btn border">
+                <i class="fas fa-shopping-cart text-primary"></i>
+                <span class="badge">0</span>
+            </a>
+        </div>
+    </div>
+    </div>
+    <!--  -->
+
+
+    <!-- Page Header Start -->
+    <div class="container-fluid bg-secondary mb-5">
+        <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 300px">
+            <h1 class="font-weight-semi-bold text-uppercase mb-3">Our Shop</h1>
+            <div class="d-inline-flex">
+                <p class="m-0"><a href="/">Home</a></p>
+                <p class="m-0 px-2">-</p>
+                <p class="m-0">Shop</p>
+            </div>
+        </div>
+    </div>
+    <!-- Page Header End -->
+
+
+    <!-- Shop Start -->
+    <div class="container-fluid pt-5">
+        <div class="row px-xl-5">
+            <!-- Shop Sidebar Start -->
+            <div class="col-lg-3 col-md-12">
+                <!-- Price Start -->
+
+                <div class="border-bottom mb-4 pb-4">
+                    <h5 class="font-weight-semi-bold mb-4">Filter by price</h5>
+                    <form action="">
+                        <div
+                            class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+                            <input type="checkbox" class="custom-control-input" id="price-all">
+                            <label class="custom-control-label" for="price-all">All Price</label>
+
+                        </div>
+                        <div
+                            class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+                            <input type="checkbox" class="custom-control-input" id="price-1">
+                            <label class="custom-control-label" for="price-1">$0 - $2000</label>
+
+                        </div>
+                        <div
+                            class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+                            <input type="checkbox" class="custom-control-input" id="price-2">
+                            <label class="custom-control-label" for="price-2">$2000 - $3000</label>
+
+                        </div>
+                        <div
+                            class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+                            <input type="checkbox" class="custom-control-input" id="price-3">
+                            <label class="custom-control-label" for="price-3">$3000 - $4000</label>
+
+                        </div>
+                        <div
+                            class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+                            <input type="checkbox" class="custom-control-input" id="price-4">
+                            <label class="custom-control-label" for="price-4">$4000 - $5000</label>
+
+                        </div>
+                        <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between">
+                            <input type="checkbox" class="custom-control-input" id="price-5">
+                            <label class="custom-control-label" for="price-5">$19000 - $500</label>
+
+                        </div>
+                    </form>
+                </div>
+                <!-- Price End -->
+
+
+
+                <!-- Size Start -->
+                <!-- <div class="mb-5">
+                    <h5 class="font-weight-semi-bold mb-4">Filter by size</h5>
+                    <form>
+                        <div
+                            class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+                            <input type="checkbox" class="custom-control-input" checked id="size-all">
+                            <label class="custom-control-label" for="size-all">All Size</label>
+                            <span class="badge border font-weight-normal">1000</span>
+                        </div>
+                        <div
+                            class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+                            <input type="checkbox" class="custom-control-input" id="size-1">
+                            <label class="custom-control-label" for="size-1">XS</label>
+                            <span class="badge border font-weight-normal">150</span>
+                        </div>
+                        <div
+                            class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+                            <input type="checkbox" class="custom-control-input" id="size-2">
+                            <label class="custom-control-label" for="size-2">S</label>
+                            <span class="badge border font-weight-normal">295</span>
+                        </div>
+                        <div
+                            class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+                            <input type="checkbox" class="custom-control-input" id="size-3">
+                            <label class="custom-control-label" for="size-3">M</label>
+                            <span class="badge border font-weight-normal">246</span>
+                        </div>
+                        <div
+                            class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+                            <input type="checkbox" class="custom-control-input" id="size-4">
+                            <label class="custom-control-label" for="size-4">L</label>
+                            <span class="badge border font-weight-normal">145</span>
+                        </div>
+                        <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between">
+                            <input type="checkbox" class="custom-control-input" id="size-5">
+                            <label class="custom-control-label" for="size-5">XL</label>
+                            <span class="badge border font-weight-normal">168</span>
+                        </div>
+                    </form>
+                </div> -->
+                <!-- Size End -->
+            </div>
+            <!-- Shop Sidebar End -->
+
+
+            <!-- Shop Product Start -->
+            <div class="col-lg-9 col-md-12">
+                <div class="row pb-3">
+                    <div class="col-12 pb-1">
+                        <div class="d-flex align-items-center justify-content-between mb-4">
+                            <form action="">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" name="search" placeholder="Search by name">
+                                    <div class="input-group-append">
+                                        <button type="submit" class="input-group-text bg-transparent text-primary">
+                                            <i class="fa fa-search"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                            <div class="dropdown ml-4">
+                                <button class="btn border dropdown-toggle" type="button" id="triggerId"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Sort by
+                                </button>
+                                <form action="">
+                                    <!-- <div class="dropdown-menu dropdown-menu-right" id="sort"aria-labelledby="triggerId">
+                                        <a class="dropdown-item" href="#">A to z</a>
+                                        <a class="dropdown-item" href="#">Z to A</a>
+                                        <a class="dropdown-item" href="#">Price 0 to 100</a>
+                                        <a class="dropdown-item" href="">Price 100 to 0</a>
+                                    </div>  -->
+                                    <div class="dropdown-menu dropdown-menu-right" id="sort"
+                                        aria-labelledby="triggerId">
+                                        <a class="dropdown-item" href="#" data-sortby="name" data-sortorder="asc">A to
+                                            z</a>
+                                        <a class="dropdown-item" href="#" data-sortby="name" data-sortorder="desc">Z to
+                                            A</a>
+                                        <a class="dropdown-item" href="#" data-sortby="pPrice"
+                                            data-sortorder="asc">Price low to high</a>
+                                        <a class="dropdown-item" href="#" data-sortby="pPrice"
+                                            data-sortorder="desc">Price high to low</a>
+                                    </div>
+                                </form>
+
+
+                            </div>
+                        </div>
+                    </div>
+                    <% product.forEach((pdt)=>{ %>
+
+                        <div class="col-lg-4 col-md-6 col-sm-12 pb-1">
+
+                            <div class="card product-item border-0 mb-4">
+                                <a href="/detail?id=<%=pdt._id  %>">
+
+                                    <div
+                                        class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
+                                        <img class="img-fluid w-100" src="/images/<%=pdt.image[0]  %>" alt="">
+                                    </div>
+                                </a>
+
+                                <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
+                                    <h6 class="text-truncate mb-3">
+                                        <%=pdt.name %>
+                                    </h6>
+                                    <div class="d-flex justify-content-center">
+                                        <h6>$<%=pdt.pPrice %>
+                                        </h6>
+                                        <h6 class="text-muted ml-2"><del>$ <%=pdt. selling%></del></h6>
+                                    </div>
+                                </div>
+                                <!-- <div class="card-footer d-flex justify-content-between bg-light border">
+                                        <a href="/detail?id=<%=pdt._id  %>" class="btn btn-sm text-dark p-0"><i
+                                                class="fas fa-eye text-primary mr-1"></i>View Detail</a>
+                                        <a href="" class="btn btn-sm text-dark p-0"><i
+                                                class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
+                                    </div> -->
+                                <!--  -->
+                                <% if (pdt.quantity> 1) {%>
+                                    <div class="card-footer d-flex justify-content-between bg-light border">
+                                        <a href="/detail?id=<%=pdt._id  %>" class="btn btn-sm text-dark p-0"><i
+                                                class="fas fa-eye text-primary mr-1"></i>View
+                                            Detail</a>
+                                        <a href="/detail?id=<%=pdt._id  %>" class="btn btn-sm text-dark p-0"><i
+                                                class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
+                                    </div>
+
+                                    <% } else {%>
+                                        <div class="card-footer d-flex justify-content-center bg-primary igborder">
+                                            out of stock
+                                        </div>
+
+                                        <% } %>
+                                            <!--  -->
+
+                            </div>
+
+                        </div>
+
+                        <% }) %>
+
+
+
+
+
+                            <div class="col-12 pb-1">
+                                <nav aria-label="Page navigation">
+                                    <ul class="pagination justify-content-center mb-3">
+                                        <% if (currentPage> 1) { %>
+                                            <li class="page-item ">
+                                                <a class="page-link" aria-label="Previous"
+                                                    href="?page=<%= currentPage - 1 %>&search=<%= search %>">
+
+                                                    <span aria-hidden="true">&laquo;</span>
+                                                    <span class="sr-only">Previous</span>
+                                                </a>
+                                            </li>
+                                            <% } %>
+
+                                                <% for (let i=1; i <=totalPages; i++) { %>
+                                                    <% if (i===currentPage) { %>
+
+                                                        <li class="page-item active"><a class="page-link" href="#">
+                                                                <%= i %>
+                                                            </a></li>
+                                                        <% } else { %>
+                                                            <li class="page-item "><a class="page-link"
+                                                                    href="?page=<%= i %>&search=<%= search %>">
+                                                                    <%= i %>
+                                                                </a></li>
+                                                            <% } %>
+                                                                <% } %>
+                                                                    <% if (currentPage < totalPages) { %>
+                                                                        <li class="page-item">
+                                                                            <a class="page-link"
+                                                                                href="?page=<%= currentPage + 1 %>&search=<%= search %>"
+                                                                                aria-label="Next">
+                                                                                <span aria-hidden="true">&raquo;</span>
+                                                                                <span class="sr-only">Next</span>
+                                                                            </a>
+                                                                        </li>
+                                                                        <% } %>
+                                    </ul>
+                                </nav>
+                            </div>
+
+
+
+                </div>
+            </div>
+            <!-- Shop Product End -->
+        </div>
+    </div>
+    <!-- Shop End -->
+
+
+    <!-- Footer Start -->
+
+    <!-- Footer End -->
+    <script>
+        const checkboxes = document.querySelectorAll('input[type=checkbox]');
+        checkboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', event => {
+                const params = new URLSearchParams();
+                checkboxes.forEach(cb => {
+                    if (cb.checked) {
+                        params.append(cb.id, cb.value);
+                    }
+                });
+                const queryString = params.toString();
+                const url = `/shop?${queryString}`;
+                window.location.href = url;
+            });
+        });
+
+        const dropdown = document.getElementById('sort');
+        dropdown.addEventListener('click', event => {
+            event.preventDefault();
+            const selectedOption = event.target.closest('.dropdown-item');
+            if (selectedOption) {
+                const sortBy = selectedOption.dataset.sortby;
+                const sortOrder = selectedOption.dataset.sortorder;
+                const urlParams = new URLSearchParams(window.location.search);
+                urlParams.set('sortBy', sortBy);
+                urlParams.set('sortOrder', sortOrder);
+                const newUrl = `${window.location.pathname}?${urlParams.toString()}`;
+                window.location.href = newUrl;
+            }
+        });
+    </script>
+
+
+
+
+
+
+    <!-- 
+
+    Back to Top
+    <a href="#" class="btn btn-primary back-to-top"><i class="fa fa-angle-double-up"></i></a>
+
+
+   
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+    <script src="lib/easing/easing.min.js"></script>
+    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+
+
+    <script src="mail/jqBootstrapValidation.min.js"></script>
+    <script src="mail/contact.js"></script>
+
+
+    <script src="js/main.js"></script>
+    </body>
+
+    </html> -->
+    <%- include('../layouts/user/footer.ejs') %>

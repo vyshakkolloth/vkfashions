@@ -1,0 +1,288 @@
+
+
+
+            <%- include('../layouts/admin/header.ejs') %>
+
+            <!-- Sale & Revenue Start -->
+            <div class="container-fluid pt-4 px-4">
+                <div class="row g-4">
+                    <div class="col-sm-6 col-xl-3">
+                        <div class="bg-secondary rounded d-flex align-items-center justify-content-between p-4">
+                            <i class="fa fa-chart-line fa-3x text-primary"></i>
+                            <div class="ms-3">
+                                <p class="mb-2">Total user</p>
+                                <h6 class="mb-0"><%= user %></h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-xl-3">
+                        <div class="bg-secondary rounded d-flex align-items-center justify-content-between p-4">
+                            <i class="fa fa-chart-bar fa-3x text-primary"></i>
+                            <div class="ms-3">
+                                <p class="mb-2">Total products</p>
+                                <h6 class="mb-0"><%= product%></h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-xl-3">
+                        <div class="bg-secondary rounded d-flex align-items-center justify-content-between p-4">
+                            <i class="fa fa-chart-area fa-3x text-primary"></i>
+                            <div class="ms-3">
+                                <p class="mb-2">Total order</p>
+                                <h6 class="mb-0"><%= order %></h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-xl-3">
+                        <div class="bg-secondary rounded d-flex align-items-center justify-content-between p-4">
+                            <i class="fa fa-chart-pie fa-3x text-primary"></i>
+                            <div class="ms-3">
+                                <p class="mb-2">Total Revenue</p>
+                                <h6 class="mb-0">$<%= revenue[0].total%></h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Sale & Revenue End -->
+
+
+            <!-- Sales Chart Start -->
+            <div class="container-fluid pt-4 px-4">
+                <div class="row g-4">
+                     
+                    <div class="col-sm-12 col-xl-6">
+                        <div class="bg-secondary rounded  p-4">
+                            <h6 class="mb-4">Order Delivered</h6>
+                            <div id="piechart_3d"style="width: 100%; height: 455px;"></div>
+                           
+                        </div>
+                    </div> 
+                    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+                    <div class="col-sm-12 col-xl-6">
+                        <div class="bg-secondary rounded  p-4">
+                            <h6 class="tm-block-title">Payments Type Report</h6>
+                            <div class="tm-bg-primary-dark tm-block" style="background-color: rgb(42, 55, 67); width:100%; height: 465px;">
+                                
+                                <canvas style="margin: 0 auto;" class="mt-4" id="piechart" ></canvas>
+                                <button class="" style="background: none; color: white; border: none;" onclick="downloadpieChart()"><i
+                                    class="fa fa-download" aria-hidden="true"></i></button>
+                              </div>
+
+                        </div>
+                    </div> 
+
+                    <div class="col-sm-12 col-xl-12">
+                        <div class="bg-secondary rounded  p-4">
+                            <div class="tm-bg tm-block" style="background-color: rgb(42, 55, 67);">
+                                <h2 class="tm-block-title">Daily Sales</h2>
+                                <canvas id="lineChart"></canvas>
+                                <button class="" style="background:none; color: white; border: none; position: relative; bottom: 20px;"
+                                  onclick="downloadlineChart()"><i class="fa fa-download" aria-hidden="true"></i></button>
+                              </div>
+                            
+
+                        </div>
+                    </div> 
+                    
+                </div>
+            </div>
+            <!-- line -->
+            <script>
+
+                const daily = '<%= JSON.stringify(dailySalesDetails) %>';
+                const data = JSON.parse(daily.replace(/&#34;/g, '"'));
+                // Create an array of days in the current month
+                const currentDate = new Date();
+                const currentDay = currentDate.getDate();
+                const daysInMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 0).getDate();
+                const daysArray = Array.from({ length: daysInMonth }, (_, i) => i);
+        
+                const totalSalesArray = daysArray.map(day => {
+                  const matchingData = data.find(d => new Date(d.date).getDate() === day);
+                  console.log(matchingData);
+                  if (day <= currentDay) {
+                    return matchingData ? matchingData.totalSales : 0;
+                  } else {
+                    return null;
+                  }
+                });
+                console.log(totalSalesArray);
+        
+        
+                const ctx = document.getElementById('lineChart');
+                ctx.width = 600;
+                ctx.height = 200;
+                new Chart(ctx, {
+                  type: 'line',
+                  data: {
+                    labels: daysArray,
+                    datasets: [{
+                      label: 'Total Sales',
+                      data: totalSalesArray,
+                      borderWidth: 2,
+                      borderColor: 'red',
+                      backgroundColor: 'red',
+                      tension: 0.4
+                    }]
+        
+                  }, options: {
+                    plugins: {
+                      title: {
+                        display: true,
+                        text: 'Daily Sales',
+                        font: {
+                          size: 18,
+                          weight: 'bold',
+                        }
+                      },
+                      legend: {
+                        labels: {
+                          font: {
+                            color: 'white',
+                            weight: 'bold',
+                          }
+                        }
+                      }
+                    }
+                  },
+        
+                  options: {
+                    scales: {
+                      y: {
+                        ticks: {
+                          color: 'white',
+                          beginAtZero: true,
+                          stepSize: 1000,
+                          max: 10000,
+                          font: {
+                            size: 14,
+                            color: '#555'
+                          }
+                        },
+        
+                        title: {
+                          display: true,
+                          text: 'Daily Sales',
+                          color: 'red',
+        
+        
+                        },
+                        grid: {
+                          color: 'grey'
+                        }
+                      },
+                      x: {
+                        ticks: {
+                          color: 'white',
+                          font: {
+                            size: 14,
+        
+                          }
+                        },
+                        title: {
+                          display: true,
+                          text: 'Daily Sales',
+                          color: 'red',
+                        },
+                        grid: {
+                          color: 'grey',
+                          display: true
+                        }
+                      }
+                    }
+                  }
+                });
+        
+                function downloadlineChart() {
+                  var chartCanvas = document.getElementById('lineChart');
+                  var dataURL = chartCanvas.toDataURL('image/png');
+                  var link = document.createElement('a');
+                  link.download = 'chart.png';
+                  link.href = dataURL;
+                  link.click();
+                }
+        
+              </script>
+            <!-- line -->
+            <!-- pie -->
+            <script>
+                const code ='<%= cod%>'
+                const wallete='<%= wallet%>'
+                const razoe='<%=razo%>'
+      
+                const ctxx = document.getElementById('piechart');
+                var myChart = new Chart(ctxx, {
+                  type: 'pie',
+                  data: {
+                    labels: ['COD', 'razorpay', 'wallet'],
+                    datasets: [{
+                      label: 'Mode of Payment',
+                      data: [code, wallete, razoe],
+                      backgroundColor: [
+                        'teal',
+                        'grey',
+                        'brown'
+                      ],
+      
+                      borderWidth: 1
+                    }]
+                  },
+                  options: {
+                    // ...
+                  }
+                });
+                function downloadpieChart() {
+                  var chartCanvas = document.getElementById('piechart');
+                  var dataURL = chartCanvas.toDataURL('image/png');
+                  var link = document.createElement('a');
+                  link.download = 'chart.png';
+                  link.href = dataURL;
+                  link.click();
+                }
+              </script>
+      
+            <!-- pie -->
+           
+           
+               <script type="text/javascript">
+                const act='<%= JSON.stringify(active) %>'
+                const active = JSON.parse(act);
+
+                const can='<%= JSON.stringify(cancel) %>'
+                const cancel = JSON.parse(can);
+
+                
+
+                google.charts.load("current", {packages:["corechart"]});
+                google.charts.setOnLoadCallback(drawChart);
+                function drawChart() {
+                  var data = google.visualization.arrayToDataTable([
+                    ['Task', 'Hours per Day'],
+                    ['active',     active],
+                    ['cancelld',     cancel]
+                    
+                  ]);
+          
+                  var options = {
+                    title: 'My Daily Activities',
+                    is3D: true,
+                    backgroundColor: '#6C7293'
+                  };
+          
+                  var chart = new google.visualization.PieChart(document.getElementById('piechart_3d'));
+                  chart.draw(data, options);
+                }
+              </script>
+      
+    
+
+
+
+
+
+          
+
+            <%- include('../layouts/admin/footer.ejs') %>
+          

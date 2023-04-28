@@ -1,0 +1,137 @@
+<%- include('../layouts/admin/header.ejs') %>
+
+
+    <!-- Typography Start -->
+    <form onsubmit="return validateForm()" method="post" enctype="multipart/form-data" action="/admin/addProduct">
+        <div class="col-sm-12 col-xl-8 m-auto mt-4">
+            <div class="bg-secondary rounded h-100 p-4">
+                <h6 class="mb-4">Add product</h6>
+
+                <label for="name">Product Name </label>
+                <input class="form-control mb-3" type="text" id="name"pattern="[A-Za-z]{1,32}" title=" only letters" required name="name" placeholder="name of item"
+                    aria-label="default input example">
+
+                <label for="name">Category </label>
+                <div class="form-floating mb-3">
+                    <select name="category" class="form-select" id="floatingSelect"
+                        aria-label="Floating label select example">
+                        <% for( let i=0; i < listCategory.length; i++ ) { %>
+                            <!-- <option selected></option> -->
+                            <option value="<%= listCategory[i].name %>">
+                                <%= listCategory[i].name %>
+                            </option>
+                            <% } %>
+                    </select>
+                    <label for="floatingSelect">Select Category</label>
+                </div>
+
+                <label for="name">Image </label>
+                <div class="mb-3">
+                    <input required class="form-control form-control-sm bg-dark" multiple id="fileToUpload" accept="image/*" name="image"
+                        type="File" />
+                </div>
+
+                <label for="name">After discount price </label>
+                <input required class="form-control mb-3" type="number" min="1" id="price" pattern='[0-9]+(\\.[0-9][0-9]?)?' name="pPrice" placeholder="price"
+                    aria-label="default input example" />
+                <label for="name">Brand </label>
+                <input required class="form-control mb-3" type="text" id="brand" name="brand" placeholder="brand"
+                    aria-label="default input example" />
+                <label for="name">Quantity </label>
+                <input required class="form-control mb-3" type="number" min="1" id ="stock" name="quantity" placeholder="Quantity"
+                    aria-label="default input example" />
+                <label for="name">Before discount price </label>
+                <input required class="form-control mb-3" type="number" min="1" name="sPrice" pattern='[0-9]+(\\.[0-9][0-9]?)?' placeholder="Price" id="pp
+                "
+                    aria-label="default input example" />
+                <!--  -->
+                
+                <label for="size">size </label>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" name="size"id="inlineCheckbox1" value="xs">
+                    <label class="form-check-label" for="inlineCheckbox1">XS</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" name="size" id="inlineCheckbox2" value="s">
+                    <label class="form-check-label" for="inlineCheckbox2">S</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" name="size" id="inlineCheckbox3" value="m" >
+                    <label class="form-check-label" for="inlineCheckbox3">M</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" name="size" id="inlineCheckbox3" value="l" >
+                    <label class="form-check-label" for="inlineCheckbox3">L</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" name="size" id="inlineCheckbox3" value="xl" >
+                    <label class="form-check-label" for="inlineCheckbox3">XL</label>
+                </div>
+                <hr>
+
+
+
+                <!--  -->
+
+                <div class="form-floating mb-3">
+                    <textarea required class="form-control" placeholder="description" id="floatingTextarea"
+                        style="height: 150px;" name="discription"></textarea>
+                    <label for="floatingTextarea">Comments</label>
+                </div>
+                <% if (typeof message !=='undefined' ) { %>
+                    <p style="color: green">
+                        <%= message %>
+                    </p>
+                    <% } %>
+
+                        <button class="btn btn-primary w-100 m-2"   type="submit">Button</button>
+            </div>
+        </div>
+    </form>
+
+    <script type="text/javascript">
+  function validateForm() {
+    // Get the values entered by the user
+    var name = document.getElementById("name").value;
+    var brand = document.getElementById("brand").value;
+    var description = document.getElementById("floatingTextarea").value;
+    var price = parseFloat(document.getElementById("price").value);
+    var pprice = parseFloat(document.getElementById("sprice").value);
+    var quantity = parseFloat(document.getElementById("stock").value);
+
+    // var  = document.getElementById("").value;
+    var sizes = document.querySelectorAll('input[name="size"]:checked');
+    var file = document.getElementById("fileToUpload");
+    // console.log("name:"+name);
+
+    // Validate the values
+    if (name == "" || brand == "" || description == "" || price == "" || isNaN(price) || price <= 0 || pprice == "" || isNaN(pprice) || pprice <= 0 || quantity == "" || quantity <= 0 || sizes.length == 0 || file.value == "") {
+      // Display a SweetAlert error message
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Please fill in all required fields and select an image and enter price value greater than 0',
+      });
+      return false;
+    }
+
+    // Vali+date the file extension
+    var extension = file.value.split('.').pop().toLowerCase();
+    if (extension != "jpg" && extension != "jpeg" && extension != "png" && extension != "gif" && extension != "webp") {
+      // Display a SweetAlert error message
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Please select a valid image file (JPG, PNG or GIF)',
+      });
+      return false;
+    }
+
+    // If everything is valid, return true to submit the form
+    return true;
+  }
+</script>
+
+
+
+    <%- include('../layouts/admin/footer.ejs') %>

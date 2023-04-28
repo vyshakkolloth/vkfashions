@@ -1,0 +1,129 @@
+<%- include('../layouts/admin/header.ejs') %>
+
+
+    <!-- form -->
+    <div class="container-fluid pt-4 px-4">
+        <div class="row g-4">
+            <div class="col-sm-12 col-xl-6">
+                <div class="bg-secondary rounded h-100 p-4">
+                    <h6 class="mb-4">Add category</h6>
+
+                    <form method="post" action="/admin/Category">
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">Category</label>
+                            <input type="text" class="form-control" required name="name" id="exampleInputEmail1"
+                                aria-describedby="emailHelp">
+                            <div id="emailHelp" class="form-text">please enter 
+                            </div>
+                        </div>
+
+                        <% if (typeof message !=='undefined' ) { %>
+                            <p style="color: green">
+                                <%= message %>
+
+                            </p>
+                            <% } %>
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
+            </div>
+            <!-- form -->
+          
+
+            <!--  -->
+            <div class="col-sm-12 col-xl-6">
+                <div class="bg-secondary rounded h-100 p-4">
+                    <h6 class="mb-4">Category status</h6>
+                    <table class="table">
+                        <thead>
+
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Category</th>
+                                <th> access</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% for( let i=0; i < category.length; i++ ) { %>
+                                <tr>
+                                    <th scope="row">
+                                        <%= i+1%>
+                                    </th>
+                                    <td>
+                                        <%= category[i].name %>
+                                    </td>
+                                    <td>
+                                        <% if(category[i].access) { %>
+                                            <a href="/admin/deleteCategory?id=<%=category[i]._id  %>"><button type="button" class="btn btn-success m-2" >Not blocked</button></a>
+                                            <%} else{ %>
+
+                                                <a href="/admin/deleteCategory?id=<%=category[i]._id  %>"><button type="button" class="btn btn-danger m-2">blocked</button></a>
+                                                <% } %>
+                                    </td>
+                                </tr>
+                                <% } %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+
+
+        <!--  -->
+
+
+        <% if (sweatAlert=="notblocked" ) { %>
+            <script>
+                Swal.fire({
+                   // position: 'top-end',
+                    icon: 'success',
+                    title: 'access approved',
+                    //showConfirmButton: false,
+                  //  timer: 2000
+                })
+
+            </script>
+
+            <% } %>
+            <% if (sweatAlert=="added" ) { %>
+                <script>
+                    Swal.fire({
+                       // position: 'top-end',
+                        icon: 'success',
+                        title: 'New Category Added',
+                        //showConfirmButton: false,
+                      //  timer: 2000
+                    })
+    
+                </script>
+    
+                <% } %>
+            <% if (sweatAlert=="Blocked" ) { %>
+                <script>
+                    Swal.fire({
+                        title: 'Iteam blocked!',
+                        text: 'Do you want to continue',
+                        icon: 'error',
+                        confirmButtonText: 'Cool'
+                    })
+                </script>
+    
+                <% } %>
+                <% if (sweatAlert=="exits" ) { %>
+                    <script>
+                        Swal.fire({
+                            title: 'Iteam already exist!',
+                            text: 'Do you want to continue',
+                            icon: 'error',
+                            confirmButtonText: 'Cool'
+                        })
+                    </script>
+        
+                    <% } %>
+                    <%=console.log(sweatAlert+"sweatAl"); %>
+
+
+
+        <%- include('../layouts/admin/footer.ejs') %>

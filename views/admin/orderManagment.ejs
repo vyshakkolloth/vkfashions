@@ -1,0 +1,82 @@
+<%- include('../layouts/admin/header.ejs') %>
+
+    <div class="container-fluid pt-4 px-4">
+        <div class="row g-4">
+            <div class="col-12">
+                <div class="bg-secondary rounded h-100 p-4">
+                    <h6 class="mb-4">Responsive Table</h6>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">No.</th>
+                                    <th scope="col">Billing Name</th>
+                                    <th scope="col">Order ID</th>
+                                    <th scope="col">Mode Of Payment</th>
+                                    <th scope="col">Date Of Order</th>
+                                    <th scope="col">cart detailed</th>
+                                    
+                                    <th scope="col">grand total</th>
+                                    <th scope="col">Status</th>
+                                    <!-- <th scope="col">Status</th> -->
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% data.forEach((ele,i)=> { %>
+
+
+                                    <tr>
+                                        <th scope="row">
+                                            <%= i +1%>
+                                        </th>
+                                        <td>
+                                            <%= ele.user.name %>
+                                        </td>
+
+                                        <td>
+                                            <%=ele._id %>
+                                        </td>
+                                        <td>
+                                            <%= ele.paymentMethod %>
+                                        </td>
+                                        <td>
+                                           <%= ele.orderDate.toLocaleDateString('en-GB', {
+                                            day: 'numeric',
+                                            month: 'numeric',
+                                            year: 'numeric'
+                                          });%>
+                                        </td>
+                                        <td>
+                                           <a href="/admin/orderDetails?id=<%= ele._id %>"> <button type="button" class="btn btn-primary" >
+                                            order detailed
+                                        </button></a>
+                                        <td>
+                                            <%= ele.grandTotal %>
+                                        </td>
+                                        <td><%= ele.status %></td>
+                                        <!-- <td> <a href="/admin/approval?cart=<%= ele._id %>"><button type="button" class="btn btn-primary" > option</button></a> </td> -->
+                                    </tr>
+                                    <% }) %>
+
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+     
+  <% if (sweatAlert=="delivered" ) { %>
+    <script>
+        Swal.fire({
+            title: 'pro!',
+            text: 'Do you want to continue',
+            icon: 'error',
+            confirmButtonText: 'Sorry'
+        })
+    </script>
+
+    <% } %>
+
+    <%- include('../layouts/admin/footer.ejs') %>

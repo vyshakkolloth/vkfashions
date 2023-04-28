@@ -1,0 +1,136 @@
+<%- include('../layouts/admin/header.ejs') %>
+    <div class="container-fluid pt-4 px-4">
+        <div class="row g-4">
+
+            <div class="col-sm-12 col-xl-6">
+                <div class="bg-secondary rounded h-100 p-4">
+                    <h6 class="mb-4">Coupon Table</h6>
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col">Title</th>
+                                <th scope="col">Code</th>
+                                <th scope="col">Expiry date</th>
+                                <th scope="col">Min Amount</th>
+                                <th scope="col">Max Amount</th>
+                                <th scope="col">Min disc</th>
+                                <th scope="col">Max disc</th>
+                                <th scope="col">Action</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% couponDetails.forEach(element=> { %>
+                                <tr>
+                                    <th scope="row">
+                                        <%= element.couponName %>
+                                    </th>
+                                    <th scope="row">
+                                        <%= element.couponId %>
+                                    </th>
+                                    <th scope="row">
+                                        <%= element.expiryDate %>
+                                    </th>
+                                    <th scope="row">
+                                        <%= element.minAmount %>
+                                    </th>
+                                    <th scope="row">
+                                        <%= element.maxAmount %>
+                                    </th>
+                                    <th scope="row">
+                                        <%= element.discount %>
+                                    </th>
+                                    <th scope="row">
+                                        <%= element.max_discount %>
+                                    </th>
+                                    <th>
+                                        <a href="/admin/couponDelete?id=<%= element._id %>"><button type="button" class="btn btn-info m-2">Delete</button></a>
+                                    </th>
+
+                                </tr>
+
+                                <% }) %>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!--  -->
+            <div class="col-sm-12 col-xl-6">
+                <div class="bg-secondary rounded h-100 p-4">
+                    <h6 class="mb-4">Create Coupon</h6>
+
+                    <form action="/admin/addcoupon" id="orderform" method="post">
+                        <input class="form-control mb-3" type="text" placeholder="coupon Name" name="couponName"
+                            id="coupname" required aria-label="default input example">
+                        <input class="form-control mb-3" type="text" placeholder="coupon Id" name="couponId" required
+                            id="coupID" aria-label="default input example">
+                        <input class="form-control mb-3" type="date" placeholder="expiryDate" name="expiryDate" required
+                            id="expiryDate" aria-label="default input example">
+                        <input class="form-control mb-3" type="number"placeholder="minAmount" min="1"name="maxAmount" required
+                            id="maxAmount" aria-label="default input example">
+                        <input class="form-control mb-3" type="number" placeholder="maxAmount" min="1"name="minAmount" required
+                            id="minAmount" aria-label="default input example">
+
+
+                        <input class="form-control mb-3" type="number" placeholder="Min Discount in %" min="1"max="100" name="discount"
+                            id="mindiscount" required aria-label="default input example">
+
+
+
+
+                        <input class="form-control mb-3" type="number" placeholder="max_discount" min="1"max="100" name="maxdiscount"
+                            id="maxdiscount" required aria-label="default input example">
+
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <% if (sweat_alert=="exist" ) { %>
+        <script>
+            Swal.fire({
+                title: 'Already exist!',
+                text: 'Do you want to continue',
+                icon: 'error',
+                confirmButtonText: 'Cool'
+            })
+        </script>
+
+        <% } %>
+    <script>
+        $(document).ready(function () {
+            $('#orderfor').submit(function(e) {
+            e.preventDefault();
+            var error = false;
+        
+                var discount = $('#mindiscount').val();
+                if (discount < 1) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Discount cannot below 1%'
+                    });
+                    return;
+                }
+               
+                var maxDiscount = $('#maxdiscount').val();
+                if (maxDiscount > 100) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Discount cannot exceed 100%'
+                    });
+                    return;
+                }
+                // Submit the form
+                 // Submit the form if no errors
+            if (!error) {
+              this.submit();
+            }
+            });
+        });
+    </script>
+
+    <%- include('../layouts/admin/footer.ejs') %>

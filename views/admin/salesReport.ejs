@@ -1,0 +1,144 @@
+<%- include('../layouts/admin/header.ejs') %>
+    <!--  -->
+    <div class="container-fluid pt-4 px-4">
+        <div class="bg-secondary rounded-top p-4">
+            <div class="row">
+                <form action="">
+                    <div class="col-6 col-sm-2 text-center text-sm-start">
+
+                        <input class="form-control mb-3" type="date" placeholder="expiryDate" name="startDate" required
+                            id="expiryDate" aria-label="default input example">
+                        <input class="form-control mb-3" type="date" placeholder="expiryDate" name="endDate" required
+                            id="expiryDate" aria-label="default input example">
+
+                        <button type="submit" class="btn btn-primary"> submit</button>
+
+                    </div>
+                </form>
+
+                <div class="col-12 col-sm-6 text-center text-sm-end">
+                    <button id="download-pdf-btn" class="btn btn-primary me-2" onclick="printTable()" >Download PDF</button>
+                    <button id="download-excel-btn" class="btn btn-primary">Download Excel</button>
+
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+    <!--  -->
+    <div class="container-fluid pt-4 px-4">
+        <div class="row g-4">
+            <div class="col-12">
+                <div class="bg-secondary rounded h-100 p-4">
+                    <h6 class="mb-4">Sales Report</h6>
+                    <div class="table-responsive">
+                        <table class="table" id="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">NO.</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Product</th>
+                                    <th scope="col">Quantity</th>
+                                    <th scope="col">Date</th>
+                                    <th scope="col">Price</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% deliveredProducts.forEach(e=> { %>
+
+
+
+
+                                    <tr>
+                                        <th scope="row">1</th>
+
+                                        <td>
+                                            <%= e.userName %>
+                                        </td>
+                                        <td>
+                                            <%= e.productName %>
+                                        </td>
+                                        <td>
+                                            <%= e.quantity %>
+                                        </td>
+                                        <td>
+                                            <%= e.deliveryDate.toLocaleDateString('en-GB', { day: 'numeric' ,
+                                                month: 'numeric' , year: 'numeric' }) %>
+                                        </td>
+                                        <td>
+                                            <%= e.totalPrice %>
+                                        </td>
+                                    </tr>
+                                    <% }) %>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script> -->
+
+    <!-- pdf ===============================-->
+    <script >
+        // Get the table element
+        const table = document.querySelector('table');
+        console.log(table);
+
+        // Add click event listener to the PDF download button
+        document.querySelector('#download-pdf-btn').addEventListener('click', () => {
+            // Initialize jsPDF
+            var doc = new jsPDF();
+
+            console.log("Generating PDF...");
+            doc.autoTable({ html: table });
+
+            // Download the PDF
+            doc.save('sales-report.pdf');
+        });
+
+        document.querySelector('#download-excel-btn').addEventListener('click', () => {
+            const wb = XLSX.utils.book_new();
+
+            const ws = XLSX.utils.table_to_sheet(table);
+
+            XLSX.utils.book_append_sheet(wb, ws, 'Sales Report');
+
+            XLSX.writeFile(wb, 'sales-report.xlsx');
+        });
+
+       
+
+    </script>
+    <!-- pdf -->
+   <script>
+    function printTable() {
+                var table = document.getElementById("table");
+                if (!table) {
+                    console.error("Table element not found.");
+                    return;
+                }
+                var newWin = window.open('', 'Print-Window');
+                if (!newWin) {
+                    console.error("Could not open print window.");
+                    return;
+                }
+                newWin.document.open();
+                newWin.document.write('<html><body onload="window.print()">' + table.outerHTML + '</html>');
+                newWin.document.close();
+                setTimeout(function () {
+                    if (!newWin.closed) {
+                        newWin.close();
+                    }
+                }, 1000);
+            }
+   </script>
+    
+
+
+    <%- include('../layouts/admin/footer.ejs') %>

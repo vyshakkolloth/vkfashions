@@ -1,0 +1,166 @@
+<%- include('../layouts/admin/header.ejs') %>
+    <div class="container-fluid pt-4 px-4">
+        <div class="row g-4">
+
+            <div class="col-sm-12 col-xl-6">
+                <div class="bg-secondary rounded h-100 p-4">
+                    <h6 class="mb-4">Product Detail</h6>
+                    <div class="table-responsive">
+
+                        <% data.order.forEach(e=> { %>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">product</th>
+                                        <th scope="col">price</th>
+                                        <th scope="col">quantity</th>
+                                        <th scope="col">size</th>
+                                        <th scope="col">Total price</th>
+
+
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th scope="row">
+                                            <%= e.product.name %>
+                                        </th>
+                                        <td>
+                                            <%= e.price%>
+                                        </td>
+                                        <td>
+                                            <%= e.quantity %>
+                                        </td>
+                                        <td>
+                                            <%= e.size %>
+                                        </td>
+                                        <td>
+                                            <%= e.totalprice %>
+                                        </td>
+
+
+
+                                    </tr>
+
+
+                                </tbody>
+
+                            </table>
+                            <% }) %>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-sm-12 col-xl-6">
+                <div class="bg-secondary rounded h-100 p-4">
+                    <h6 class="mb-4">Address</h6>
+                    <dl class="row mb-0">
+                        <dt class="col-sm-4">Name</dt>
+                        <dd class="col-sm-8 text-success">:<%= data.address.firtName %>
+                        </dd>
+
+                        <dt class="col-sm-4">Mobile no.</dt>
+                        <dd class="col-sm-8">:<%= data.address.MobileNo %>.</dd>
+
+                        <dt class="col-sm-4">Address_line</dt>
+                        <dd class="col-sm-8">:<%= data.address.Address_Line %>
+                        </dd>
+
+                        <dt class="col-sm-4 text-truncate">City</dt>
+                        <dd class="col-sm-8">:<%= data.address.city %>
+                        </dd>
+
+                        <dt class="col-sm-4">Country</dt>
+                        <dd class="col-sm-8">:<%= data.address.country %>
+                        </dd>
+
+                        <dt class="col-sm-4">Zip&State</dt>
+                        <dd class="col-sm-8">
+                            <dl class="row">
+                                <dt class="col-sm-4">:<%= data.address.state %>
+                                </dt>
+                                <dd class="col-sm-8">:<%= data.address.zipCode %>
+                                </dd>
+                            </dl>
+                        </dd>
+                    </dl>
+                </div>
+            </div>
+            <!-- === -->
+            <div class="col-sm-12 col-xl-6">
+                <div class="bg-secondary rounded h-100 p-4">
+                    <h6 class="mb-4">Information</h6>
+                    <dl class="row mb-0">
+                        <dt class="col-sm-4">Order status</dt>
+                        <dd class="col-sm-8">:<%= data.status %>
+                        </dd>
+                        <dt class="col-sm-4 text-warning">Payment Method</dt>
+                        <dd class="col-sm-8 text-warning">:<%= data.paymentMethod %>
+                        </dd>
+
+                        <!-- <dt class="col-sm-4 ">Before Discount</dt>
+                        <dd class="col-sm-8 text-white">:<%= data.grandTotal %>
+                        </dd> -->
+
+                        <dt class="col-sm-4 text-success"><b>After Discount</b></dt>
+                        <dd class="col-sm-8 text-success h6"> :<%= data.grandTotal %></dd>
+
+                        <dt class="col-sm-4 text-truncate">Transit</dt>
+                        <dd class="col-sm-8" id="Transit">
+                           : <%= data.orderStatus %>
+                        </dd>
+
+
+                        <dt class="col-sm-4">controles</dt>
+                        <dd class="col-sm-8">
+                            <dl class="row">
+                              <% if(data.status!=="Cancel"){ %>
+                                <dd class="col-sm-8"><button onclick="status('<%= data._id%>')"
+                                        class="btn btn-success rounded-pill m-2"> Delivery status</button></dd>
+                                        <% }else{ %>
+                                            <dd class="col-sm-8 text-danger">:Order Cancelled</dd>
+                                            <% } %>
+                            </dl>
+                        </dd>
+                    </dl>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <script>
+        function status(ID) {
+            $.ajax({
+                url: '/admin/approval?id=' + ID,
+                type: "post",
+                contentType: 'application/json',
+                dataType: 'json',
+                success: function (res) {
+                    console.log(res)
+                    if (res.outOfStock == true) {
+                        
+
+                        // console.log('iteam delivered');
+                        Swal.fire({
+                        title: 'Iteam delivered!',
+                        text: 'Do you want to continue',
+                        icon: 'error',
+                        confirmButtonText: 'ok'
+                    })
+
+                    }else{  //if(ID==res.)
+
+                    $(`#Transit`).text(`:${res.orderStatus}`);
+
+                }
+                },error: function (res) {
+                    console.log(res);
+                }
+            })
+        }
+    </script>
+
+
+    <%- include('../layouts/admin/footer.ejs') %>

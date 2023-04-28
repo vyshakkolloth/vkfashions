@@ -1,0 +1,235 @@
+<%- include('../layouts/user/header.ejs') %>
+    <!-- Topbar End -->
+
+    <div class="container-fluid">
+
+        <div class="row align-items-center py-3 px-xl-5">
+          <div class="col-lg-3 d-none d-lg-block">
+            <a href="/" class="text-decoration-none">
+              <h1 class="m-0 display-5 font-weight-semi-bold"><span
+                  class="text-primary font-weight-bold border px-3 mr-1">VK</span>FASHION</h1>
+            </a>
+          </div>
+          <div class="col-lg-6 col-6 text-left">
+    
+          </div>
+          <div class="col-lg-3 col-6 text-right">
+            <a href="/wishListDisplay" class="btn border">
+              <i class="fas fa-heart text-primary"></i>
+              <span class="badge">0</span>
+            </a>
+            <a href="/cart" class="btn border">
+              <i class="fas fa-shopping-cart text-primary"></i>
+              <span class="badge">0</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+
+    <!-- Navbar Start -->
+    <div class="container-fluid">
+        <div class="row border-top px-xl-5">
+            <div class="col-lg-3 d-none d-lg-block">
+                <a href="/addAddress"
+                    class="btn shadow-none d-flex align-items-center justify-content-between bg-primary text-white w-100"
+                    style="height: 65px; margin-top: -1px; padding: 0 30px;">
+                    <h6 class="m-0"> Add Address</h6>
+
+                </a>
+
+            </div>
+            <div class="col-lg-9">
+                <nav class="navbar navbar-expand-lg bg-light navbar-light py-3 py-lg-0 px-0">
+                    <a href="" class="text-decoration-none d-block d-lg-none">
+                        <h1 class="m-0 display-5 font-weight-semi-bold"><span
+                                class="text-primary font-weight-bold border px-3 mr-1">E</span>Shopper</h1>
+                    </a>
+                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+                        <div class="navbar-nav mr-auto py-0">
+                            <a href="/" class="nav-item nav-link">Home</a>
+                            <a href="/shop" class="nav-item nav-link">Shop</a>
+                            
+                            <div class="nav-item dropdown">
+                                
+                            </div>
+                            
+                        </div>
+                        <div class="navbar-nav ml-auto py-0">
+                            <a href="/login" class="nav-item nav-link">Login</a>
+                            <a href="/profile" class="nav-item nav-link">profile</a>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+    <!--  -->
+
+    <div class="mb-4 p-5">
+        <h4 class="font-weight-semi-bold mb-4">Billing Address</h4>
+        <form action="/addAddress" id="orderform" method="post">
+            <div class="row">
+                <div class="col-md-6 form-group">
+                   
+                    <label>First Name</label>
+                    <input class="form-control" required name="Fname" id="name" type="text" placeholder="John">
+                    <span class="error text-danger"  id="name-error"></span>
+                </div>
+                <div class="col-md-6 form-group">
+                    <label>Last Name</label>
+                    <input class="form-control" required name="Lname" id="name"type="text" placeholder="Doe">
+                    <span class="error text-danger"  id="name-error"></span>
+                </div>
+                <div class="col-md-6 form-group">
+                    <label>E-mail</label>
+                    <input class="form-control" type="email" id="email" required name="email" placeholder="example@email.com">
+                    <span class="error text-danger"  id="email-error"></span>
+                </div>
+                <div class="col-md-6 form-group">
+                    <label>Mobile No</label>
+                    <input class="form-control" type="text" id="phone"required name="mobileNo" placeholder="+123 456 789">
+                    <span class="error text-danger"  id="phone-error"></span>
+                </div>
+                <div class="col-md-6 form-group">
+                    <label>Address Line 1</label>
+                    <input class="form-control" type="text" id="house" required name="address" placeholder="123 Street">
+                    <span class="error text-danger"  id="house-error"></span>
+                </div>
+
+                <div class="col-md-6 form-group">
+                    <label>Country</label>
+                    <input class="form-control" type="text" id="country"required name="country" placeholder="india">
+                    <span class="error text-danger"  id="country-error"></span>
+                </div>
+                <div class="col-md-6 form-group">
+                    <label>City</label>
+                    <input class="form-control" required name="city" type="text" id="district" placeholder="New York">
+                    <span class="error text-danger"  id="district-error"></span>
+                </div>
+                <div class="col-md-6 form-group">
+                    <label>State</label>
+                    <input class="form-control" required name="state" id="state"type="text" placeholder="New York">
+                    <span class="error text-danger"  id="state-error"></span>
+                </div>
+                <div class="col-md-6 form-group">
+                    <label>ZIP Code</label>
+                    <input class="form-control" type="text" id="pincode"required name="zipCode" placeholder="673001">
+                    <span class="error text-danger"  id="pincode-error"></span>
+                </div>
+
+
+            </div>
+            <div>
+                <button class="btn btn-primary btn-block border-0 py-3" type="submit">New Address</button>
+            </div>
+        </form>
+
+    </div>
+
+    <!--  -->
+    <!-- Footer Start -->
+    
+    <!-- Footer End -->
+    <script>
+        $(document).ready(function() {
+           $('#orderform').submit(function(e) {
+            e.preventDefault();
+            var error = false;
+        
+            // Validate full name
+            var name = $('#name').val().trim();
+              if (!name) {
+                $('#name-error').text('Please enter your full name');
+                error = true;
+                $('#name')
+            } else {
+              $('#name-error').text('');
+            }
+        
+            // Validate house name
+            var housename = $('#house').val();
+            if (!housename) {
+              $('#house-error').text('Please enter your house name');
+              error = true;
+            } else {
+              $('#house-error').text('');
+            }
+        
+            // Validate pincode
+            var pincode = $('#pincode').val();
+            var pincode_regex = /^[0-9]{6}$/;
+            if (!pincode || !pincode_regex.test(pincode)) {
+              $('#pincode-error').text('Please enter a valid 6-digit pincode');
+              error = true;
+            } else {
+              $('#pincode-error').text('');
+            }
+        
+            // Validate city
+            var city = $('#country').val();
+            if (!city) {
+              $('#country-error').text('Please enter your city');
+              error = true;
+            } else {
+              $('#country-error').text('');
+            }
+        
+            // Validate district
+            var district = $('#district').val();
+            if (!district) {
+              $('#district-error').text('Please enter your district');
+              error = true;
+            } else {
+              $('#district-error').text('');
+            }
+              // Validate state
+              var state = $('#state').val();
+              if (!state) {
+                  $('#state-error').text('Please enter your state');
+                  error = true;
+              } else {
+                  $('#state-error').text('');
+              }
+          
+            // Validate mobile number
+            var mobilenumber = $('#phone').val();
+            var mobilenumber_regex = /^[0-9]{10}$/;
+            if (!mobilenumber || !mobilenumber_regex.test(mobilenumber)) {
+              $('#phone-error').text('Please enter a valid 10-digit mobile number');
+              error = true;
+            } else {
+              $('#phone-error').text('');
+            }
+        
+            // Validate email
+            var email = $('#email').val();
+            var email_regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!email || !email_regex.test(email)) {
+              $('#email-error').text('Please enter a valid email address');
+              error = true;
+            } else {
+              $('#email-error').text('');
+            }
+            
+            
+            // Submit the form if no errors
+            if (!error) {
+              this.submit();
+            }
+          });
+        });
+      </script>
+
+
+    <!-- Back to Top -->
+    <a href="#" class="btn btn-primary back-to-top"><i class="fa fa-angle-double-up"></i></a>
+
+
+    <!-- JavaScript Libraries -->
+<!-- Footer Start -->
+<%- include('../layouts/user/footer.ejs') %>
