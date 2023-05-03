@@ -24,27 +24,31 @@ user_route.set('views', "./views/users")
 user_route.get('/', userController.loadHome)//,auth.isLogin
 user_route.get('/register',userController.loadRegister)
 user_route.post("/register", userController.insertUser)
-user_route.get("/verification", userController.verificationLoad)
-user_route.get("/verify", userController.verifyMail)
+user_route.get("/verification", userController.verificationLoad)// test case
+user_route.get("/verify", userController.verifyMail)// test
 // user_route.get("/",auth.isLogOut,userController.loginLoad)
 user_route.get('/login', userController.loginLoad)
 user_route.post('/login', userController.verifyLogin)
 user_route.get('/logout', auth.isLogin, userController.userLogout)
-// user_route.get('/example',userController.example)
+
 user_route.get("/otpPage", auth.isLogOut, userController.otpLogin)
 user_route.post("/otpPage", userController.verifyOtpMail)
 user_route.get("/otpValidate", auth.isLogOut, userController.enterOtp)
 user_route.post("/otpValidate", userController.otpVerify)
+// == shop and details
 user_route.get('/shop', userController.shop)
 user_route.get('/detail', userController.productDetail)
+// ===cart
 user_route.get("/cart", userController.cart)//,auth.isLogin
 user_route.post("/cart", auth.isLogin, userController.addCart)
 user_route.get("/removeCart", auth.isLogin, userController.removeCart)
 user_route.post("/increament", auth.isLogin, userController.increament)
 user_route.post("/decreament", auth.isLogin, userController.decrement)
+// ===wishlist
 user_route.get("/wishListDisplay", auth.isLogin, userController.wishlist)
 user_route.get("/wishList", userController.addWishlist)
 user_route.get("/deletewishlist", auth.isLogin, userController.removeWishlist)
+// ==
 user_route.post("/proceedToCheckout", auth.isLogin, cartController.proceedToCheckout)
 user_route.get("/checkout", auth.isLogin, cartController.checkout)//auth.isLogin,
 user_route.get("/razorpay",auth.isLogin,cartController.razorpay)

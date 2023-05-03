@@ -1,4 +1,4 @@
-const express = require('express')
+// const express = require('express')
 const Razorpay = require('razorpay')
 
 const orderModel = require('../models/orderModel')
@@ -7,21 +7,23 @@ const User = require('../models/userModel')
 const categorySchema = require('../models/category')
 const mongoose = require('mongoose')
 const couponsSchema = require('../models/couponsSchema')
+const dotenv = require("dotenv");
+dotenv.config({ path: "../config.env" })
 
 
 let { ObjectId } = mongoose.Types
 
 
 var instance = new Razorpay({
-    key_id: 'rzp_test_A2tpP62NDFg7Wm',
-    key_secret: 'w8SOXbzEkkxQlN6O5mHQKGCX',
+    key_id: process.env.RAZO,  //'rzp_test_A2tpP62NDFg7Wm',
+    key_secret: process.env.RAZOKEY//'w8SOXbzEkkxQlN6O5mHQKGCX',
 });
 
 let sweat_alert
 const checkout = async (req, res) => {
     try {
         const category = await categorySchema.find
-        const id = "63ff0b5b64d439b414808271"// req.session.user_id // 
+        const id = req.session.user_id 
         const userData = await User.findById({ _id: id }).populate("cart.products")
         const coupons= await couponsSchema.find()
 
@@ -37,10 +39,10 @@ const checkout = async (req, res) => {
         res.status(500).send('Server Error');
     }
 }
-
+// ===checkout===
 const proceedToCheckout = async (req, res) => {
     try {
-        const id = req.session.user_id //"63ff0b5b64d439b414808271" 
+        const id = req.session.user_id 
 
 
         const { select, fname, lname, email, Mobile, address, country, city, state, zipCode, payment } = req.body
@@ -169,7 +171,7 @@ const proceedToCheckout = async (req, res) => {
 const razorpay = async (req, res) => {
 
     // =======
-    const id = req.session.user_id //"63ff0b5b64d439b414808271" 
+    const id = req.session.user_id 
     const user = await User.findById(id).populate("cart.products");
     const updatedAddress = req.session.orderdata
 
@@ -206,7 +208,7 @@ const razorpay = async (req, res) => {
 
 
     user.cart.forEach(async (item) => {
-        // console.log(item+" ===== ");
+       
         const product = await productModel.findOneAndUpdate(
             { _id: item.products },
             { $inc: { quantity: -item.quantity } }
@@ -228,8 +230,8 @@ const razorpay = async (req, res) => {
 const addressLoader = async (req, res) => {
     try {
 
-        const id = req.session.user_id// "63ff0b5b64d439b414808271"// 
-        const userData = await User.findById({ _id: id }) //.populate("cart.products")
+        const id = req.session.user_id
+        const userData = await User.findById({ _id: id }) 
 
         const address = userData.address.id(req.body.value);
         if (!address) {
@@ -254,9 +256,8 @@ const sucess = async (req, res) => {
         console.log(req.query + " order id")
         const id = req.query.id
 
-        // console.log(req.body);
         const data = await orderModel.findById(id).populate('order.product')
-        // console.log(data + "order data ")
+    
 
 
         res.render("ordersucess", { data })
@@ -268,10 +269,10 @@ const sucess = async (req, res) => {
 }
 const myOrders = async (req, res) => {
     try {
-        const id = req.session.user_id // "63ff0b5b64d439b414808271" //
+        const id = req.session.user_id 
         const user = await User.findOne({ _id: id })
         const orders = await orderModel.find({ user: user._id }).populate('order.product').populate('user')
-        // console.log(orders[0])
+       
         const category = null
         res.render("myorders", { category: category, order: orders })
     } catch (error) {
@@ -292,13 +293,13 @@ const cancelOrder = async (req, res) => {
 
     } catch (error) {
         console.error(error)
-        // res.status(500).send('Server Error');
+        res.status(500).send('Server Error');
     }
 }
 // =======admin side
 const adminorderDetail = async (req, res) => {
     try {
-        // console.log(req.query.id)
+      
         const id = req.query.id
 
         let data = await orderModel.findById(id).populate("user").populate("order.product")

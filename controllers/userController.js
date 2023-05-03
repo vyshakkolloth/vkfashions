@@ -14,7 +14,8 @@ const { query } = require("express");
 const reviewModel = require("../models/reviewModel");
 
 
-dotenv.config({ path: "./config.env" })
+dotenv.config({ path: "../config.env" })
+
 
 
 
@@ -52,8 +53,8 @@ const sendVerifyMail = async (name, email, user_id) => {
             secure: false,
             requireTLS: true,
             auth: {
-                user: "vkfastion@gmail.com",
-                pass: "bugrppgzomfcgdgd "
+                user: process.env.userI,
+                pass: process.env.PASS
             }
         })             //Vkbrototype@1234
         const mailOption = {
@@ -176,7 +177,7 @@ const insertUser = async (req, res) => {
 const verifyMail = async (req, res) => {
     try {
         const updateInfo = await User.updateOne({ _id: req.query.id }, { $set: { is_verified: 1 } })
-        console.log(updateInfo);
+        // console.log(updateInfo);
         res.render("email-verified")
 
     } catch (error) {
@@ -192,8 +193,10 @@ const verificationLoad = async (req, res) => {
         console.log(error.message);
     }
 }
+
+
 // -----------------------------------------------------
-//login user methods
+
 
 const loginLoad = async (req, res) => {
     try {
@@ -231,22 +234,8 @@ const verifyLogin = async (req, res) => {
         console.log(error.message)
     }
 }
-// const loadHome = async (req, res) => {
-//     try {
-//         var search = ''
-//         search=req.query.search
-//         // const userData = req.session.user_id 
-//         const products = await productModel.find({ access: true ,$or:[ {name:{$regex:'.*'+search+'.*'}}]})
-//         const categorys = await categorySchema.find()
-//         const ban = await bannerSchema.find()
-//         // console.log(userData);
-//         res.render('home', { product: products, category: categorys, banner: ban }) //user: userData ,
-//     } catch (error) {
-//         console.log(error.message)
-//     }
-// }
 
-// with pagination
+// ===========home page=========
 const loadHome = async (req, res) => {
     try {
         const search = req.query.search || '';
@@ -275,6 +264,9 @@ const loadHome = async (req, res) => {
             sweat_alert
         });
         sweat_alert = null
+        
+
+        
     } catch (error) {
         console.log(error.message);
     }
@@ -335,16 +327,16 @@ const verifyOtpMail = async (req, res) => {
         if (req.body.username.trim().length == 0) {
             res.redirect("/otpPage");
             message = "Please fill the form";
-            console.log("checking the whitespace");
+            // console.log("checking the whitespace");
         } else {
             const userData = await User.findOne({ username: otpCheckMail });
-            console.log(userData + " its me ");
-            console.log("otpcheckmail else case worked");
+            // console.log(userData + " its me ");
+            // console.log("otpcheckmail else case worked");
 
             if (userData) {
                 if (otpCheckMail) {
                     if (userData.is_verified == 1) {
-                        console.log(otpCheckMail + " mail is verified");
+                        // console.log(otpCheckMail + " mail is verified");
                         if (userData.access == true) {
                             res.redirect("/otpValidate");
                             const mailtransport = nodemailer.createTransport({
@@ -352,8 +344,8 @@ const verifyOtpMail = async (req, res) => {
                                 port: 465,
                                 secure: true,
                                 auth: {
-                                    user: "process.env.PORT",
-                                    pass: "process.env.PASS"//"bugrppgzomfcgdgd "
+                                    user: process.env.USERI,
+                                    pass: process.env.PASS   //"bugrppgzomfcgdgd 
                                 },
                             });
                             generatedOtp = otpgen();
@@ -375,12 +367,12 @@ const verifyOtpMail = async (req, res) => {
                         } else {
                             res.redirect("/otpPage");
                             message = "Your account has been blocked";
-                            console.log("Your account has been blocked");
+                            // console.log("Your account has been blocked");
                         }
                     } else {
                         res.redirect("/otpPage");
                         message = "Mail is not verified";
-                        console.log("Mail is not verified");
+                        // console.log("Mail is not verified");
                     }
                 }
             } else {
@@ -396,26 +388,26 @@ const verifyOtpMail = async (req, res) => {
 
 const otpVerify = async (req, res) => {
     try {
-        console.log("Entered to otpVerify");
+        // console.log("Entered to otpVerify");
         if (req.body.otpField.join().trim().length == 0) {
             message = "Please Enter OTP";
             res.redirect("/otpValidate");
         } else {
             const OTP = Number(req.body.otpField.join(''));
-            console.log(OTP, generatedOtp);
+            // console.log(OTP, generatedOtp);
             const regex_otp = /^\d{6}$/;
 
 
 
             if (generatedOtp == OTP) {
-                console.log('otp is compairing..' + otpCheckMail);
+                // console.log('otp is compairing..' + otpCheckMail);
                 const userData = await User.findOne({ username: otpCheckMail });
-                console.log(userData);
+                // console.log(userData);
                 req.session.user_id = userData._id;
-                console.log(req.session.user_id, +'otp matched');
+                // console.log(req.session.user_id, +'otp matched');
                 res.redirect("/");
             } else {
-                console.log('otp is incorrect');
+                // console.log('otp is incorrect');
                 message = "OTP is incorrect";
                 res.redirect("/otpValidate");
 
@@ -427,43 +419,7 @@ const otpVerify = async (req, res) => {
     }
 };
 // =======shop=======================
-// const shop = async (req, res) => {
-//     try {
-//         const search = req.query.search || '';
-//         const pageNumber = parseInt(req.query.page) || 1;
-//         const sortBy = req.query.sortBy || 'selling'; // default sort by selling price
-//         const sortOrder = req.query.sortOrder || 'asc'; // default ascending order
-//         console.log(req.query)
 
-//         const pageSize = 6;
-//         const productsQuery = productModel
-//             .find({ access: true, $or: [{ name: { $regex: '.*' + search + '.*' } }] })
-//             .skip((pageNumber - 1) * pageSize)
-//             .sort({ [sortBy]: sortOrder })
-//             .limit(pageSize)
-//         const products = await productsQuery.exec();
-//         const totalProductsCount = await productModel.countDocuments({
-//             access: true,
-//             $or: [{ name: { $regex: '.*' + search + '.*' } }],
-//         });
-//         const totalPages = Math.ceil(totalProductsCount / pageSize);
-//         const categorys = await categorySchema.find();
-//         const ban = await bannerSchema.find();
-//         res.render('shop', {
-//             product: products,
-//             category: categorys,
-//             banner: ban,
-//             currentPage: pageNumber,
-//             totalPages: totalPages,
-//             search: search,
-//         });
-
-
-
-//     } catch (error) {
-//         console.log(error.message)
-//     }
-// }
 const shop = async (req, res) => {
     try {
         const search = req.query.search || '';
@@ -475,8 +431,7 @@ const shop = async (req, res) => {
         let maxPrice = Infinity;
         const sortBy = req.query.sortBy || 'pPrice'; // sort by price
         const sortOrder = req.query.sortOrder || 'asc'; // default ascending order
-        // console.log(req.query.price);
-        // console.log(req.query['price'])
+       
 
         // if (req.query.price) {
 
@@ -555,24 +510,30 @@ const productDetail = async (req, res) => {
 
         const id = req.query.id
         const data = await productModel.findOne({ _id: id })
-        // console.log("ityigiui", data);
+        
+       if(data)
+       {
         const productData = await productModel.find({ access: true })
         const categorys = await categorySchema.find({ access: true })
         const rev = await reviewModel.find({ product: id }).limit(5)
-        // console.log(review)
+       
         res.render('productDetail', { product: data, category: categorys, products: productData, sweat_alert, review: rev })
         sweat_alert = null
+       }else{
+        res.redirect("/shop");
+        console.log("nfnf")
+       }
     } catch (error) {
         console.log(error.message);
         res.status(500).send('Server Error');
+        
     }
 }
 
 const addCart = async (req, res) => {
     try {
 
-        // console.log("aaaa", req.body);
-        // const { size, quantity, idpdt ,price} = req.body
+      
         let quantity = req.body.quantity
         let idpdt = req.body.id
         let price = req.body.price
@@ -600,12 +561,12 @@ const addCart = async (req, res) => {
 
                 // =====
                 const datas = await User.findOne({ _id: session, "cart.products": idpdt })
-                // console.log("4454654"+datas+"45646")
+              
                 let grandTotal = 0
                 let grand = datas.cart.forEach(element => {
                     grandTotal += element.totalprice
                 });
-                // console.log("grand Total:"+grandTotal)
+                
                 await User.updateOne({ _id: session }, { $set: { grandtotal: grandTotal } })
 
 
@@ -751,7 +712,7 @@ const decrement = async (req, res) => {
             const update = await User.updateOne({ _id: id, "cart.products": pdtId }, { $inc: { "cart.$.quantity": -1 } });
             const data = await User.findOne({ _id: id, "cart.products": pdtId })
             // total decrement===
-            // console.log("update" + update[0] + "update");
+          
             const total = data.cart.filter((cartIteam) => {
                 return cartIteam.products == pdtId
             })
@@ -835,8 +796,7 @@ const addWishlist = async (req, res) => {
 
 
         } else {
-            // console.log(req.headers.referer)  //were the site is comming from
-            // console.log(req.originalUrl+" url "); //were the method url
+           
 
             res.redirect("/login");
 
@@ -849,7 +809,7 @@ const addWishlist = async (req, res) => {
 }
 const removeWishlist = async (req, res) => {
     try {
-        const id = req.session.user_id //"63ff0b5b64d439b414808271"//
+        const id = req.session.user_id 
         console.log(req.session.user_id)
         const pdtId = req.query.id
 

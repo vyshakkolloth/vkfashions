@@ -1,20 +1,13 @@
+const mongoose = require('mongoose');
+
+
+
 const sessionSecret ="mysitesessionsecret"
-
-
-// const multer = require('multer')
-
-// const path=require('path')
-
-//  const storage = multer.diskStorage({
-//   destination:function (req,file,cb){
-//     cb(null,path.join(__dirname,'../public/images'))
-//   },
-//   filename:function(req,file,cb){
-//     cb(null,Date.now()+''+file.originalname)
-//   }})
-//   const upload = multer({storage:storage})
 const multer = require('multer');
 const path = require('path');
+
+
+
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -60,7 +53,6 @@ const uploads = multer({
     }
   }
 });
-
 
 
 module.exports={

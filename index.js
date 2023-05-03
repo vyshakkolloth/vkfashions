@@ -2,8 +2,10 @@ const express = require("express");
 const { default: mongoose } = require("mongoose");
 const nocache = require("nocache");
 const session =require('express-session')
+
 const dotenv = require("dotenv");
 dotenv.config({path:"./config.env"})
+
 const confiq=require('./config/config')
 const bodyParser = require('body-parser')
 
