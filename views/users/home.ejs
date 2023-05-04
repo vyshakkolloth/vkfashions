@@ -58,7 +58,7 @@
                                 <%=cat.name %>
                             </a>
                             <% }) %>
-                                <a href="" class="nav-item nav-link">Jeans</a>
+                                <!-- <a href="" class="nav-item nav-link">Jeans</a> -->
 
                     </div>
                 </nav>
@@ -80,8 +80,16 @@
                         </div>
                         <div class="navbar-nav ml-auto py-0">
                             <a href="/profile" class="nav-item nav-link">Profile</a>
-                            <a href="/logout" class="nav-item nav-link">Logout</a>
-                            <a href="/login" class="nav-item nav-link">Register/login</a>
+                            
+                            <% if (login) { %>
+                                <a href="/logout" class="nav-item nav-link">Logout</a>
+                             
+                            <% } %>
+                            <% if (!login) { %>
+                                <a href="/login" class="nav-item nav-link">Register/login</a>
+                             
+                            <% } %>
+                            
                         </div>
                     </div>
                 </nav>

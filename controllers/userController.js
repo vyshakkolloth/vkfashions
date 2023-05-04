@@ -239,7 +239,9 @@ const verifyLogin = async (req, res) => {
 const loadHome = async (req, res) => {
     try {
         const search = req.query.search || '';
-        const category = req.query.category || "";
+        const login=req.session.user_id
+        console.log(login)
+       
         const pageNumber = parseInt(req.query.page) || 1;
         const pageSize = 8;
         const productsQuery = productModel
@@ -261,6 +263,7 @@ const loadHome = async (req, res) => {
             currentPage: pageNumber,
             totalPages: totalPages,
             search: search,
+            login,
             sweat_alert
         });
         sweat_alert = null
@@ -514,6 +517,7 @@ const productDetail = async (req, res) => {
 
         const id = req.query.id
         const data = await productModel.findOne({ _id: id })
+        console.log(data)
         
        if(data)
        {
@@ -529,7 +533,8 @@ const productDetail = async (req, res) => {
        }
     } catch (error) {
         console.log(error.message);
-        res.status(500).send('Server Error');
+        // res.status(500).send('Server Error');
+        res.redirect("/shop");
         
     }
 }
@@ -760,9 +765,10 @@ const wishlist = async (req, res) => {
 
         if (userId) {
             const data = await User.findById({ _id: userId }).populate('wishlist.product')
+            const login =req.session.user_id
             sweat_alert = null
             console.clear()
-            res.render("wishlist", { wishlist: data })
+            res.render("wishlist", { wishlist: data ,login})
         } else {
             res.redirect("/login");
         }

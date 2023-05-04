@@ -70,6 +70,7 @@ user_route.post("/editAddress", auth.isLogin, userController.updateAddress) //
 
 
 user_route.get("/sucessPage", auth.isLogin, cartController.sucess)
+
 user_route.get("/myOrders", auth.isLogin, cartController.myOrders)
 user_route.get("/cancelOrder",auth.isLogin,cartController.cancelOrder)
 user_route.post("/checkoutAddres", auth.isLogin, cartController.addressLoader)
