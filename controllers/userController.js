@@ -425,7 +425,9 @@ const shop = async (req, res) => {
         const search = req.query.search || '';
         const pageNumber = parseInt(req.query.page) || 1;
         const pageSize = 6;
-        const categoryId = req.query.category || [];
+        const categoryId = req.query.category || "";
+        const categoryQuery = categoryId ? { category: categoryId } : {};
+
 
         let minPrice = 0;
         let maxPrice = Infinity;
@@ -466,8 +468,9 @@ const shop = async (req, res) => {
 
         const productsQuery = productModel
             .find({
-                access: true,
-                $or: [{ name: { $regex: '.*' + search + '.*' } }, { category: categoryId }],
+                access: true, 
+                $or: [{ name: { $regex: '.*' + search + '.*' ,$options: 'i'} }, ],
+                ...categoryQuery,
                 selling: { $gte: minPrice, $lte: maxPrice }
 
             })
@@ -477,8 +480,9 @@ const shop = async (req, res) => {
 
         const products = await productsQuery.exec();
         const totalProductsCount = await productModel.countDocuments({
-            access: true,
-            $or: [{ name: { $regex: '.*' + search + '.*' } }],
+            access: true, 
+            $or: [{ name: { $regex: '.*' + search + '.*',$options: 'i' } }],
+            ...categoryQuery,
             pPrice: { $gte: minPrice, $lte: maxPrice }
         });
         const totalPages = Math.ceil(totalProductsCount / pageSize);

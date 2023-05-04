@@ -44,11 +44,11 @@ admin_Route.get('/logout', adminAuth.isLogin, adminCOntroller.adminlogout)
 // admin_Route.post("/edituser", adminCOntroller.updateUser)
 // admin_Route.get('/deleteuser', adminAuth.isLogin, adminCOntroller.deleteUser)
 admin_Route.get('/acess', adminAuth.isLogin, adminCOntroller.acess)
-admin_Route.get('/category', adminAuth.isLogin, adminCOntroller.loadCategory)
+admin_Route.get('/category', adminCOntroller.loadCategory)// adminAuth.isLogin,
 admin_Route.post('/category', adminCOntroller.addCategory)
 admin_Route.get('/deleteCategory', adminCOntroller.deleteCategory)
 admin_Route.get('/userTable', adminAuth.isLogin, adminCOntroller.userTable)
-admin_Route.get('/addProduct', adminAuth.isLogin, adminCOntroller.addProduct)//
+admin_Route.get('/addProduct',  adminCOntroller.addProduct)//adminAuth.isLogin,
 admin_Route.post('/addProduct', upload.array("image"), adminCOntroller.addProductPost)
 admin_Route.get('/productList', adminAuth.isLogin, adminCOntroller.productList) //
 admin_Route.get("/deletephoto", adminAuth.isLogin, adminCOntroller.deletePhoto)
@@ -59,8 +59,8 @@ admin_Route.post("/editProduct", upload.array("image"), adminAuth.isLogin, admin
 admin_Route.get("/orderManagment", adminAuth.isLogin, adminCOntroller.orderManagment)
 admin_Route.get("/orderDetails", adminAuth.isLogin, cartController.adminorderDetail)
 
-admin_Route.get("/bannerManagement", adminAuth.isLogin, adminCOntroller.bannerManagment)
-admin_Route.post("/bannerManagement", uploads.single("image"), adminAuth.isLogin, adminCOntroller.uploadBannerManagment)
+admin_Route.get("/bannerManagement",  adminCOntroller.bannerManagment)//adminAuth.isLogin,
+admin_Route.post("/bannerManagement", uploads.single("image"),adminCOntroller.uploadBannerManagment)// adminAuth.isLogin, 
 admin_Route.get("/deleteBanner", adminAuth.isLogin, adminCOntroller.deleteBanner)
 
 admin_Route.post("/approval", adminAuth.isLogin, adminCOntroller.approval)
