@@ -201,6 +201,7 @@ const verificationLoad = async (req, res) => {
 const loginLoad = async (req, res) => {
     try {
         res.render('login')
+        message=null
     } catch (error) {
         console.log(error.message + "user controller");
     }
@@ -221,11 +222,11 @@ const verifyLogin = async (req, res) => {
                     res.redirect('/')
                 }
             } else {
-                res.render('login', { message: "email and password is incorrect" })
+                res.render('login', { message: "email or password is incorrect" })
             }
 
         } else {
-            res.render('login', { message: "email and password is incorrect" })
+            res.render('login', { message: "email or password is incorrect" })
 
         }
 
@@ -240,7 +241,7 @@ const loadHome = async (req, res) => {
     try {
         const search = req.query.search || '';
         const login=req.session.user_id
-        console.log(login)
+        // console.log(login)
        
         const pageNumber = parseInt(req.query.page) || 1;
         const pageSize = 8;
@@ -517,7 +518,7 @@ const productDetail = async (req, res) => {
 
         const id = req.query.id
         const data = await productModel.findOne({ _id: id })
-        console.log(data)
+        // console.log(data)
         
        if(data)
        {
@@ -529,7 +530,7 @@ const productDetail = async (req, res) => {
         sweat_alert = null
        }else{
         res.redirect("/shop");
-        console.log("nfnf")
+        // console.log("nfnf")
        }
     } catch (error) {
         console.log(error.message);
@@ -1063,8 +1064,9 @@ module.exports = {
     enterOtp,
     verifyOtpMail,
     otpVerify, shop
-    , productDetail, cart
-    , addCart, removeCart,
+    , productDetail,
+    // cart managment
+     cart,addCart, removeCart,
     increament, decrement,
     wishlist, addWishlist, removeWishlist,
     // =====profile====

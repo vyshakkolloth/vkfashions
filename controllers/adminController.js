@@ -57,12 +57,12 @@ const verify = async (req, res) => {
 
             if (passwordMatch) {
                 if (userdata.is_admin === 0) {
-                    res.render('adminLogin', { message: "incorrect email and password admin1" })
+                    res.render('adminLogin', { message: "incorrect email and password admin" })
                 } else {
 
                     req.session.admin_id = userdata._id
                     res.redirect("/admin/home")
-                    console.log("password matched")
+                    // console.log("password matched")
 
 
                 }
@@ -71,7 +71,7 @@ const verify = async (req, res) => {
                 res.render('adminLogin', { message: "incorrect email and password admin" })
             }
         } else {
-            res.render('adminLogin', { message: "incorrect email and password admin 0" })
+            res.render('adminLogin', { message: "incorrect email and password admin " })
         }
 
     } catch (error) {

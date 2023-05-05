@@ -253,7 +253,9 @@ const sucess = async (req, res) => {
     try {
 
 
-        console.log(req.query + " order id")
+       
+       
+        // console.log(req.query + " order id")
         const id = req.query.id
 
         const data = await orderModel.findById(id).populate('order.product')

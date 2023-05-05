@@ -74,7 +74,9 @@ const useCoupon = async (req, res) => {
       const couponId = req.body.couponId
       const subTotal = req.body.subtotal
       const couponData = await couponSchema.findOne({ couponId: couponId });
-      const userid = req.session.user_Id
+      const userid = req.session.user_id
+      // ===
+      console.log(userid)
   
       if (!couponData) {
         const messa = 'invalid coupon'
@@ -103,12 +105,14 @@ const useCoupon = async (req, res) => {
           if (min <= subTotal) {
             if (subTotal <= Avg) {
               discountSubtotal = (subTotal * (1 - (couponData.discount) / 100)).toFixed(0);
-              let userSchema = await User.findByIdAndUpdate(userid, {  grandtotal: discountSubtotal })
+              let userSchema = await User.updateOne({_id:userid}, {$set:{ " grandtotal": discountSubtotal }})
+              console.log(userSchema)
               messa = 'Coupon added'
               res.status(200).send({ discountSubtotal, discount, messa })
             } else {
               discountSubtotal = (subTotal * (1 - (couponData.max_discount) / 100)).toFixed(0)
-              let userSchema = await User.findByIdAndUpdate(userid, {  grandtotal: discountSubtotal  })
+              let userSchema = await User.updateOne({_id:userid}, {$set:{"grandtotal": discountSubtotal  }})
+              console.log(userSchema)
               messa = 'Coupon added'
               res.status(200).send({ discountSubtotal, maxDiscount, messa })
             }
