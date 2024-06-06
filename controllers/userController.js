@@ -14,7 +14,7 @@ const { query } = require("express");
 const reviewModel = require("../models/reviewModel");
 
 
-dotenv.config({ path: "../config.env" })
+// dotenv.config({ path: "../config.env" })
 
 
 
@@ -47,6 +47,8 @@ const securePassword = async (password) => {
 // mail sent=================verifcation
 const sendVerifyMail = async (name, email, user_id) => {
     try {
+        console.log(email+"env----")
+        console.log(process.env.userI+"env-----")
         const transporter = nodemailer.createTransport({
             host: "smtp.gmail.com",
             port: 587,
