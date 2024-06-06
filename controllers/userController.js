@@ -61,7 +61,7 @@ const sendVerifyMail = async (name, email, user_id) => {
             from: "vyshak",
             to: email,
             subject: "verify mail"
-            , html: '<P> hi ' + name + ' ,please click here to <a href="http://localhost:4000/verify?id=' + user_id + '"> Verify </a>your email</P>'
+            , html: '<P> hi ' + name + ' ,please click here to <a href="https://vk.mandabam.online/verify?id=' + user_id + '"> Verify </a>your email</P>'
         }
         transporter.sendMail(mailOption, function (error, info) {
             if (error) {
@@ -106,7 +106,7 @@ const insertUser = async (req, res) => {
         const nameregex = /\s/g
         const emailregex = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/
         const mobileregex = /^[0-9]*$/
-        const passwordregex = /^[0-9]*$/
+        const passwordregex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/
         if (name.length <= 4) {
             re_fnameError = "Enter minimum 4 character"
             res.redirect('/register')
@@ -132,7 +132,7 @@ const insertUser = async (req, res) => {
             res.redirect('/register')
             console.log('passed mobile');
         } else if (!passwordregex.test(password)) {
-            re_passwordError = "Only Number accepted "
+            re_passwordError = "Minimum eight characters, at least one letter, one number and one special character"
             res.redirect('/register')
 
         } else if (password.length < 3) {
@@ -156,7 +156,7 @@ const insertUser = async (req, res) => {
 
                 sendVerifyMail(req.body.name, req.body.email, userData._id)
 
-                res.render('registration', { re_fnameError, re_mobileError, re_emailError, re_passwordError, message: "You Are Registerd" })
+                res.render('registration', { re_fnameError, re_mobileError, re_emailError, re_passwordError, message: "You Are Registerd please check your mail" })
                 re_emailError = null
                 re_fnameError = null
                 re_mobileError = null
